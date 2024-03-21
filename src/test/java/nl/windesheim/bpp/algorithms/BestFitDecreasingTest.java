@@ -34,18 +34,6 @@ public class BestFitDecreasingTest {
 
         List<Box> boxes = algorithm.sort(products, 6);
 
-        // Sample output
-        for (Box box : boxes) {
-            System.out.println("--- BOX ---");
-
-            for (Product product : box.products()) {
-                System.out.println("Product: " + product.weight());
-            }
-        }
-
-        System.out.println("------------");
-        System.out.println("Filled " + products.size() + " products in " + boxes.size() + " boxes.");
-
         assertEquals(3, boxes.size());
     }
 }
