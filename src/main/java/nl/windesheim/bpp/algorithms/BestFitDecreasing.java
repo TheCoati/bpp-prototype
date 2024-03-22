@@ -12,6 +12,7 @@ public class BestFitDecreasing implements Algorithm {
     /**
      * @param products Product to sort in the algorithm
      * @param boxSize The size of the available boxes
+     * @throws BoxOverflowException Throws exception when product is added that does not fit any box size
      * @return List of boxes filled with the products
      */
     @Override
