@@ -2,6 +2,7 @@ package nl.windesheim.bpp.algorithms;
 
 import nl.windesheim.bpp.Box;
 import nl.windesheim.bpp.Product;
+import nl.windesheim.bpp.exceptions.BoxOverflowException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +29,7 @@ public class BestFitDecreasingTest {
     }
 
     @Test
-    void testSort() {
+    void testSort() throws BoxOverflowException {
         // Result should always be equal no matter the order
         Collections.shuffle(products);
 

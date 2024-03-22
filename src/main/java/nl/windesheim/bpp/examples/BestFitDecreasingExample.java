@@ -4,6 +4,7 @@ import nl.windesheim.bpp.Box;
 import nl.windesheim.bpp.Product;
 import nl.windesheim.bpp.algorithms.Algorithm;
 import nl.windesheim.bpp.algorithms.BestFitDecreasing;
+import nl.windesheim.bpp.exceptions.BoxOverflowException;
 
 import java.util.*;
 
@@ -21,25 +22,29 @@ public class BestFitDecreasingExample {
     /**
      * Amount of products to generate in the test
      */
-    private static final int PRODUCTS = 20;
+    private static final int PRODUCTS = 10;
 
     public static void main(String[] args) {
         List<Product> products = getRandomProducts();
-
         Algorithm algorithm = new BestFitDecreasing();
-        List<Box> boxes = algorithm.sort(products, BOX_SIZE);
 
-        // Sample output
-        for (Box box : boxes) {
-            System.out.println("- - - BOX - - -");
+        try {
+            List<Box> boxes = algorithm.sort(products, BOX_SIZE);
 
-            for (Product product : box.products()) {
-                System.out.println("Product: " + product.weight());
+            // Sample output
+            for (Box box : boxes) {
+                System.out.println("- - - BOX - - -");
+
+                for (Product product : box.products()) {
+                    System.out.println("Product: " + product.weight());
+                }
             }
-        }
 
-        System.out.println("- - - - - - - -");
-        System.out.println("Filled " + products.size() + " products in " + boxes.size() + " boxes.");
+            System.out.println("- - - - - - - -");
+            System.out.println("Filled " + products.size() + " products in " + boxes.size() + " boxes.");
+        } catch (BoxOverflowException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -2,6 +2,7 @@ package nl.windesheim.bpp.algorithms;
 
 import nl.windesheim.bpp.Box;
 import nl.windesheim.bpp.Product;
+import nl.windesheim.bpp.exceptions.BoxOverflowException;
 
 import java.util.List;
 
@@ -12,5 +13,5 @@ public interface Algorithm {
      * @param boxSize The size of the available boxes
      * @return List of boxes filled with the products
      */
-    List<Box> sort(List<Product> products, int boxSize);
+    List<Box> sort(List<Product> products, int boxSize) throws BoxOverflowException;
 }

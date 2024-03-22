@@ -2,6 +2,7 @@ package nl.windesheim.bpp.algorithms;
 
 import nl.windesheim.bpp.Box;
 import nl.windesheim.bpp.Product;
+import nl.windesheim.bpp.exceptions.BoxOverflowException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -14,7 +15,7 @@ public class BestFitDecreasing implements Algorithm {
      * @return List of boxes filled with the products
      */
     @Override
-    public List<Box> sort(List<Product> products, int boxSize) {
+    public List<Box> sort(List<Product> products, int boxSize) throws BoxOverflowException {
         // Sort products on weight
         List<Product> sorted = products.stream()
                 .sorted(Comparator.comparing(Product::weight).reversed())
@@ -23,6 +24,10 @@ public class BestFitDecreasing implements Algorithm {
         List<Box> boxes = new ArrayList<>();
 
         for (Product product : sorted) {
+            if (product.weight() > boxSize) {
+                throw new BoxOverflowException(product);
+            }
+
             fit: {
                 for (Box box : boxes) {
                     if (box.fitsProduct(product)) {
