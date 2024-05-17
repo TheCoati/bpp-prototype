@@ -27,7 +27,7 @@ public class BestFitDecreasingResolver implements BPPResolver {
 
         for (Product product : sorted) {
             if (product.weight() > boxSize) {
-                return new ArrayList<>();
+                continue;
             }
 
             fit: {
