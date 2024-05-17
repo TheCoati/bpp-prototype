@@ -2,21 +2,22 @@ package nl.windesheim.bpp.algorithms;
 
 import nl.windesheim.bpp.Box;
 import nl.windesheim.bpp.Product;
-import nl.windesheim.bpp.exceptions.BoxOverflowException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class BestFitDecreasing implements Algorithm {
+public class BestFitDecreasingResolver implements BPPResolver {
+    private static final ExecutorService THREAD = Executors.newCachedThreadPool();
+
     /**
-     * @param products Product to sort in the algorithm
-     * @param boxSize The size of the available boxes
-     * @throws BoxOverflowException Throws exception when product is added that does not fit any box size
-     * @return List of boxes filled with the products
+     * {@inheritDoc}
      */
     @Override
-    public List<Box> sort(List<Product> products, int boxSize) throws BoxOverflowException {
+    public List<Box> sort(List<Product> products, int boxSize) {
         // Sort products on weight
         List<Product> sorted = products.stream()
                 .sorted(Comparator.comparing(Product::weight).reversed())
@@ -26,7 +27,7 @@ public class BestFitDecreasing implements Algorithm {
 
         for (Product product : sorted) {
             if (product.weight() > boxSize) {
-                throw new BoxOverflowException(product);
+                return new ArrayList<>();
             }
 
             fit: {
@@ -45,5 +46,19 @@ public class BestFitDecreasing implements Algorithm {
         }
 
         return boxes;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CompletableFuture<List<Box>> sortAsync(List<Product> products, int boxSize) {
+        CompletableFuture<List<Box>> future = new CompletableFuture<>();
+
+        THREAD.submit(() -> {
+            future.complete(this.sort(products, boxSize));
+        });
+
+        return future;
     }
 }

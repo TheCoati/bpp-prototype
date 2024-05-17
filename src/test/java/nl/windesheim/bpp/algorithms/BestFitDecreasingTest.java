@@ -2,7 +2,6 @@ package nl.windesheim.bpp.algorithms;
 
 import nl.windesheim.bpp.Box;
 import nl.windesheim.bpp.Product;
-import nl.windesheim.bpp.exceptions.BoxOverflowException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class BestFitDecreasingTest {
     private static final List<Product> products = new ArrayList<>();
 
-    private static final Algorithm algorithm = new BestFitDecreasing();
+    private static final BPPResolver algorithm = new BestFitDecreasingResolver();
 
     @BeforeAll
     public static void before() {
@@ -29,7 +28,7 @@ public class BestFitDecreasingTest {
     }
 
     @Test
-    void testSort() throws BoxOverflowException {
+    void testSort() {
         // Result should always be equal no matter the order
         Collections.shuffle(products);
 

@@ -1,7 +1,5 @@
 package nl.windesheim.bpp;
 
-import nl.windesheim.bpp.exceptions.BoxOverflowException;
-
 import java.util.List;
 
 /**
@@ -32,7 +30,7 @@ public record Box(int size, List<Product> products) {
      * @param product Product to validate if it fits in the box
      * @return Boolean if the product fits in the box
      */
-    public boolean fitsProduct(Product product) throws BoxOverflowException {
+    public boolean fitsProduct(Product product) {
         return product.weight() <= this.remainingWeight();
     }
 }
